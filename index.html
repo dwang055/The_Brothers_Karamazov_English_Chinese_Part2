@@ -24,9 +24,6 @@
   body.dark-mode footer { border-top-color:#3a3a4a; }
   body.dark-mode .page-nav-btn { background:#2a2a3a; border-color:#4a4a5a; color:#e8e8ed; }
   body.dark-mode .page-nav-btn:disabled { opacity:0.3; }
-  body.dark-mode .print-dropdown-menu { background:#2a2a3a; border-color:#4a4a5a; }
-  body.dark-mode .print-dropdown-menu .dropdown-item { color:#e8e8ed; }
-  body.dark-mode .print-dropdown-menu .dropdown-item:hover { background:#3a3a5a; }
   .top-bar { background:#0b1c26; color:#fff; padding:0.6rem 1.4rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; position:sticky; top:0; z-index:100; }
   .top-bar .title { font-weight:bold; font-size:1.1rem; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .top-bar select { padding:0.4rem 0.6rem; border-radius:4px; border:none; font-size:0.85rem; background:#fff; color:#0b1c26; cursor:pointer; max-width:180px; }
@@ -36,8 +33,6 @@
   .btn:active { opacity:0.85; }
   .btn-outline { background:#fff; border:2px solid #1b3a4b; color:#1b3a4b; }
   .btn-outline:hover { background:#f0f5f9; }
-  .btn-gold { background:#e6a817; color:#0b1c26; border:none; font-weight:700; }
-  .btn-gold:hover { background:#d4970f; }
   .simple-indicator { font-size:0.8rem; color:#ac7339; display:none; margin:0 0.3rem; }
   .simple-indicator.active { display:inline; }
   #sectionTabs { display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; border-bottom:2px solid #ddd; padding-bottom:0.8rem; scrollbar-width:none; }
@@ -56,17 +51,17 @@
   .lang-toggle-btn.active { background:var(--primary); color:#fff; }
   @media (max-width:640px) {
     .cols { display:block; }
-    .col { max-height:none; overflow-y:visible; border-radius:12px; padding:1.2rem 1rem; margin-bottom:0; }
-    .col { display:none; }
+    .col { max-height:none; overflow-y:visible; border-radius:12px; padding:1.2rem 1rem; margin-bottom:0; display:none; }
     .col.mobile-visible { display:block; }
     .lang-toggle-bar { display:flex; }
     .toolbar { gap:0.5rem; padding:0.6rem 0.8rem; }
     .top-bar .title { font-size:0.95rem; }
     .section-tab { font-size:0.85rem; padding:0.6rem 0.9rem; }
-    .quiz-box { display:block; }
     .vocab-popup { left:1rem !important; right:1rem !important; width:auto !important; max-width:none !important; bottom:1rem; top:auto !important; }
     .note-editor-popup { left:1rem !important; right:1rem !important; width:auto !important; max-width:none !important; bottom:1rem; top:auto !important; }
     .sel-toolbar { left:1rem !important; right:1rem !important; top:auto !important; bottom:1rem !important; width:auto; justify-content:center; }
+    #sectionAudioBar { flex-wrap:wrap; }
+    #sectionAudio { flex:1 1 100%; }
   }
   .vocab-trigger { background:var(--vocab-bg); border-bottom:2px dotted #b66; cursor:pointer; font-weight:600; padding:0 0.15rem; transition:background 0.15s; }
   .vocab-trigger:hover, .vocab-trigger:active { background:#ffe082; }
@@ -80,8 +75,6 @@
   .popup-speak:hover, .popup-speak:active { background:#5a4a2a; }
   .popup-example { margin-top:0.5rem; padding-top:0.4rem; border-top:1px solid #444; font-size:0.85rem; color:#d8d8e0; }
   .popup-example .lbl { color:#8fbf9f; font-weight:600; margin-right:0.3rem; }
-
-  /* ----- User highlights & notes ----- */
   mark.user-hl { background:#fff3a3; color:inherit; cursor:pointer; border-radius:2px; padding:0 1px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
   mark.user-hl.has-note { background:#bfe3ff; border-bottom:2px dotted #3b82c4; }
   mark.user-hl.flash-hl { animation:hlFlash 1.6s ease-out; }
@@ -130,7 +123,6 @@
   .notes-panel-item .np-actions { display:flex; gap:0.5rem; }
   .notes-panel-item .np-actions button { font-size:0.78rem; padding:0.3rem 0.7rem; border-radius:16px; border:1px solid #ccc; background:#f5f5f5; cursor:pointer; }
   body.dark-mode .notes-panel-item .np-actions button { background:#3a3a4a; border-color:#555; color:#e8e8ed; }
-  .notes-panel-item .np-actions button:hover { background:#e8e8e8; }
   .tts-highlight { background:#fff3cd; border-radius:4px; box-shadow:0 0 0 3px #fff3cd; transition:background 0.2s; }
   body.dark-mode .tts-highlight { background:#4a4020; box-shadow:0 0 0 3px #4a4020; }
   #readAloudBtn.reading { background:var(--accent); color:#fff; border-color:var(--accent); }
@@ -186,222 +178,6 @@
   #fontScaleLabel { font-size:0.8rem; color:#555; min-width:2.6em; text-align:center; }
   @media (max-width:640px) {
     .font-size-control { order:99; width:100%; justify-content:center; margin-top:0.3rem; }
-  }
-
-  /* Print dropdown */
-  .print-dropdown-wrap { position:relative; display:inline-block; }
-  .print-dropdown-menu { display:none; position:absolute; top:110%; left:0; background:#fff; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.15); min-width:210px; padding:0.4rem 0; z-index:50; border:1px solid #e0e0e0; }
-  .print-dropdown-menu.show { display:block; }
-  .print-dropdown-menu .dropdown-item { display:flex; align-items:center; gap:0.6rem; padding:0.5rem 1.2rem; cursor:pointer; font-size:0.85rem; color:#222; border:none; background:none; width:100%; text-align:left; transition:background 0.1s; }
-  .print-dropdown-menu .dropdown-item:hover { background:#f0f5f9; }
-  .print-dropdown-menu .dropdown-item .icon { font-size:1.1rem; }
-  .print-dropdown-menu .dropdown-item .label { flex:1; }
-
-  /* ===================== eBook print engine ===================== */
-  /* Print preview overlay: shows every page as a real A4 sheet, scaled to fit the screen. */
-  .print-preview-overlay { display:none; position:fixed; inset:0; background:#3a4047; z-index:999; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-  .print-preview-overlay.open { display:block; }
-  .print-preview-toolbar { position:sticky; top:0; z-index:10; background:#0b1c26; color:#fff; padding:0.6rem 1rem; display:flex; flex-wrap:wrap; align-items:center; gap:0.45rem 1rem; box-shadow:0 4px 16px rgba(0,0,0,0.4); font-family:"Segoe UI","Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif; }
-  .print-preview-toolbar .pp-title { font-weight:700; margin-right:auto; display:flex; align-items:baseline; gap:0.6rem; flex-wrap:wrap; }
-  .print-preview-toolbar .pp-count { font-weight:400; font-size:0.8rem; color:#e6a817; }
-  .pp-opt { font-size:0.82rem; display:flex; align-items:center; gap:0.3rem; cursor:pointer; white-space:nowrap; }
-  .pp-opt input { accent-color:#e6a817; width:16px; height:16px; }
-  .print-preview-toolbar button { border:none; border-radius:6px; padding:0.45rem 0.95rem; font-size:0.85rem; cursor:pointer; font-weight:600; }
-  .pp-print-btn { background:#e6a817; color:#0b1c26; }
-  .pp-close-btn { background:#3d5a6b; color:#fff; }
-  .pp-hint { width:100%; font-size:0.74rem; color:#aebfc7; line-height:1.4; }
-  .print-preview-paper { padding:24px 0 48px; display:flex; flex-direction:column; align-items:center; gap:22px; }
-  .print-preview-paper .bk-page { box-shadow:0 8px 28px rgba(0,0,0,0.5); flex:0 0 auto; }
-  @media (max-width:640px) {
-    .print-preview-toolbar { padding:0.5rem 0.7rem; gap:0.35rem 0.8rem; }
-    .print-preview-toolbar .pp-title { width:100%; }
-    .pp-hint { display:none; }
-    .pp-opt { font-size:0.78rem; }
-    .print-preview-toolbar button { padding:0.4rem 0.75rem; font-size:0.8rem; }
-    .print-preview-paper { padding:12px 0 32px; gap:12px; }
-  }
-
-  /* Hidden on screen; only #printArea is shown when actually printing (see @media print). */
-  #printArea { display:none; }
-  /* Off-screen sandbox used to measure real block heights for pagination. */
-  #printMeasureSandbox { position:absolute; left:-99999px; top:0; visibility:hidden; pointer-events:none; }
-
-  /* ----- Page ----- */
-  .bk-page {
-    --bk-ink:#22262b; --bk-navy:#1b3a4b; --bk-accent:#b8432f; --bk-gold:#c9971c; --bk-muted:#80868e; --bk-rule:#ddd6c6; --bk-cream:#faf6ec;
-    --bk-serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Noto Serif","Times New Roman","Songti SC","Noto Serif CJK SC",serif;
-    --bk-serif-zh:"Songti SC","STSong","Noto Serif CJK SC","Noto Serif SC","Source Han Serif SC","SimSun",serif;
-    --bk-sans:"Avenir Next","Segoe UI","Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
-    position:relative; width:210mm; height:296.5mm; overflow:hidden; background:#fff; color:var(--bk-ink);
-    box-sizing:border-box; break-after:page; page-break-after:always; break-inside:avoid;
-    -webkit-print-color-adjust:exact; print-color-adjust:exact; text-align:left;
-  }
-  .bk-page:last-child { break-after:auto; page-break-after:auto; }
-  .bk-page *, #printMeasureSandbox * { box-sizing:border-box; }
-  .bk-body { position:absolute; top:21mm; bottom:20mm; left:19mm; right:19mm; }
-  .bk-flow, #printMeasureSandbox {
-    --bk-ink:#22262b; --bk-navy:#1b3a4b; --bk-accent:#b8432f; --bk-gold:#c9971c; --bk-muted:#80868e; --bk-rule:#ddd6c6; --bk-cream:#faf6ec;
-    --bk-serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Noto Serif","Times New Roman","Songti SC","Noto Serif CJK SC",serif;
-    --bk-serif-zh:"Songti SC","STSong","Noto Serif CJK SC","Noto Serif SC","Source Han Serif SC","SimSun",serif;
-    --bk-sans:"Avenir Next","Segoe UI","Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
-    display:flow-root; font-family:var(--bk-serif); font-size:10.5pt; line-height:1.5; color:var(--bk-ink); text-align:left;
-  }
-
-  /* Running head & folio (sit in the page margins, so they never steal body space) */
-  .bk-head { position:absolute; top:10.5mm; left:19mm; right:19mm; display:flex; justify-content:space-between; align-items:baseline; gap:8mm; padding-bottom:1.6mm; border-bottom:0.4pt solid var(--bk-rule); color:var(--bk-muted); line-height:1.2; }
-  .bk-head-l { font-family:var(--bk-serif); font-style:italic; font-size:8.5pt; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:55%; }
-  .bk-head-r { font-family:var(--bk-sans); font-size:6.8pt; letter-spacing:0.16em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:45%; text-align:right; }
-  .bk-foot { position:absolute; bottom:9mm; left:19mm; right:19mm; height:5mm; font-family:var(--bk-sans); font-size:6.6pt; color:#a3a8ae; letter-spacing:0.06em; line-height:5mm; }
-  .bk-foot-brand { position:absolute; left:0; top:0; }
-  .bk-foot-brand b { color:var(--bk-navy); font-weight:700; letter-spacing:0.12em; text-transform:uppercase; }
-  .bk-folio { position:absolute; left:50%; top:0; transform:translateX(-50%); font-family:var(--bk-serif); font-size:9.5pt; color:var(--bk-navy); letter-spacing:0.08em; white-space:nowrap; }
-  .bk-folio::before, .bk-folio::after { content:''; display:inline-block; width:5mm; height:0; border-top:0.5pt solid var(--bk-gold); vertical-align:middle; margin:0 2.2mm; }
-
-  /* Ornament: thin gold rules around a small diamond (pure CSS, no font needed) */
-  .bk-orn { display:flex; align-items:center; justify-content:center; gap:2.4mm; margin:4mm auto; }
-  .bk-orn::before, .bk-orn::after { content:''; width:14mm; border-top:0.6pt solid var(--bk-gold); }
-  .bk-orn i { display:block; width:1.9mm; height:1.9mm; background:var(--bk-gold); transform:rotate(45deg); }
-
-  /* Chapter opener & single-print title block */
-  .bk-chap-open { text-align:center; padding:16mm 0 5mm; }
-  .bk-chap-num { font-family:var(--bk-serif); font-size:40pt; line-height:1; color:var(--bk-gold); font-weight:400; }
-  .bk-chap-kicker { font-family:var(--bk-sans); font-size:7.5pt; letter-spacing:0.32em; text-transform:uppercase; color:var(--bk-accent); margin-top:3mm; }
-  .bk-chap-kicker span { font-family:var(--bk-serif-zh); letter-spacing:0.2em; margin-left:1.5mm; }
-  .bk-chap-title { font-family:var(--bk-serif); font-size:22pt; line-height:1.2; color:var(--bk-navy); font-weight:600; margin:3.5mm 8mm 0; }
-  .bk-doc-head { text-align:center; padding:4mm 0 3mm; }
-  .bk-brand-line { font-family:var(--bk-sans); font-size:7pt; letter-spacing:0.3em; text-transform:uppercase; color:var(--bk-accent); font-weight:700; }
-  .bk-brand-line span { font-family:var(--bk-serif-zh); color:var(--bk-muted); letter-spacing:0.15em; font-weight:400; margin-left:1.5mm; }
-  .bk-doc-title { font-family:var(--bk-serif); font-size:20pt; line-height:1.2; color:var(--bk-navy); font-weight:600; margin-top:3mm; }
-  .bk-doc-sub { font-family:var(--bk-serif); font-style:italic; font-size:11pt; color:#555; margin-top:1.5mm; }
-
-  /* Column labels */
-  .bk-cols-label { display:grid; grid-template-columns:1fr 1fr; column-gap:0; margin:2mm 0 3mm; font-family:var(--bk-sans); font-size:6.8pt; letter-spacing:0.22em; text-transform:uppercase; color:var(--bk-muted); }
-  .bk-cols-label div { padding-bottom:1.2mm; border-bottom:0.5pt solid var(--bk-navy); }
-  .bk-cols-label div + div { margin-left:4.5mm; }
-  .bk-cols-label div:first-child { margin-right:4.5mm; }
-
-  /* Section heading */
-  .bk-sec { display:flex; align-items:baseline; gap:2.6mm; margin:5mm 0 3.2mm; }
-  .bk-sec-n { font-family:var(--bk-serif); font-style:italic; font-size:13pt; color:var(--bk-gold); line-height:1; }
-  .bk-sec-t { font-family:var(--bk-sans); font-size:9.5pt; font-weight:700; letter-spacing:0.04em; color:var(--bk-navy); line-height:1.3; }
-  .bk-sec::after { content:''; flex:1 1 10mm; min-width:10mm; border-top:0.5pt solid var(--bk-rule); align-self:center; }
-  .bk-first-sec .bk-sec { margin-top:1mm; }
-
-  /* Parallel paragraphs */
-  .bk-para { margin:0 0 1.2mm; }
-  .bk-row { position:relative; display:grid; grid-template-columns:1fr 1fr; column-gap:0; }
-  .bk-en { padding:0 4.5mm 2.2mm 0; text-align:justify; -webkit-hyphens:auto; hyphens:auto; overflow-wrap:break-word; }
-  .bk-zh { padding:0 0 2.2mm 4.5mm; border-left:0.5pt solid var(--bk-rule); font-family:var(--bk-serif-zh); font-size:10pt; line-height:1.72; text-align:justify; overflow-wrap:break-word; }
-  .bk-pn { position:absolute; left:-8.5mm; top:0.5mm; width:6.5mm; text-align:right; font-family:var(--bk-sans); font-size:6.8pt; font-weight:700; color:var(--bk-accent); line-height:1.6; }
-  .bk-pn.bk-cont { color:#b9bdc2; font-weight:400; }
-  .bk-en .vocab-trigger { background:none !important; border:0; border-bottom:0.7pt solid var(--bk-gold); padding:0; font-weight:600; color:var(--bk-navy); cursor:default; }
-  .bk-en mark, .bk-zh mark { background:none; color:inherit; }
-
-  /* Vocabulary notes under each paragraph */
-  .bk-gloss { margin:0 0 2.6mm; padding:1.3mm 2.6mm 1.4mm; background:var(--bk-cream); border-left:1.3pt solid var(--bk-gold); border-radius:0 1mm 1mm 0; font-family:var(--bk-sans); font-size:7.4pt; line-height:1.5; color:#555; }
-  .bk-g { white-space:normal; }
-  .bk-g-w { font-weight:700; color:var(--bk-navy); }
-  .bk-g-ipa { color:#56789a; margin-left:1mm; font-family:"Lucida Sans Unicode","Segoe UI","Arial Unicode MS","DejaVu Sans",sans-serif; }
-  .bk-g-zh { color:var(--bk-accent); font-family:var(--bk-serif-zh); margin-left:1mm; }
-  .bk-g-x { color:#777; font-style:italic; margin-left:1mm; }
-  .bk-g-sep { color:var(--bk-gold); margin:0 1.6mm; }
-
-  /* Figures */
-  .bk-fig { margin:2mm 0 4mm; display:flex; flex-wrap:wrap; justify-content:center; align-items:flex-end; gap:4mm; }
-  .bk-fig figure { margin:0; display:flex; flex-direction:column; align-items:center; }
-  .bk-fig img { display:block; object-fit:contain; border-radius:1mm; box-shadow:0 0 0 0.4pt rgba(0,0,0,0.18); background:#f4f1ea; }
-  .bk-fig figcaption { font-family:var(--bk-serif); font-style:italic; font-size:8pt; line-height:1.35; color:var(--bk-muted); margin-top:1.6mm; text-align:center; }
-
-  /* Cover */
-  .bk-cover { background:#13293a; background-image:radial-gradient(ellipse at 50% 38%, #235070 0%, #16334a 45%, #0f2231 100%); color:#f5efe2; }
-  .bk-cover-frame { position:absolute; inset:11mm; border:0.8pt solid rgba(214,168,55,0.85); }
-  .bk-cover-frame::after { content:''; position:absolute; inset:1.8mm; border:0.3pt solid rgba(214,168,55,0.55); }
-  .bk-cover-inner { position:absolute; inset:24mm 24mm 22mm; display:flex; flex-direction:column; align-items:center; text-align:center; }
-  .bk-cover-brand { font-family:var(--bk-sans); font-size:8pt; font-weight:700; letter-spacing:0.42em; text-transform:uppercase; color:#e3b341; }
-  .bk-cover-brand span { display:block; font-family:var(--bk-serif-zh); font-weight:400; letter-spacing:0.5em; font-size:8pt; color:rgba(245,239,226,0.7); margin-top:2mm; text-transform:none; }
-  .bk-cover-mid { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; }
-  .bk-cover-img { display:block; max-width:120mm; max-height:92mm; object-fit:contain; border:1.2mm solid #f5efe2; box-shadow:0 3mm 8mm rgba(0,0,0,0.35); margin-bottom:10mm; }
-  .bk-cover-kicker { font-family:var(--bk-sans); font-size:7.5pt; letter-spacing:0.36em; text-transform:uppercase; color:#e3b341; }
-  .bk-cover-kicker span { font-family:var(--bk-serif-zh); letter-spacing:0.3em; }
-  .bk-cover-title { font-family:var(--bk-serif); font-weight:500; line-height:1.15; margin-top:6mm; color:#fffaf0; letter-spacing:0.01em; }
-  .bk-cover-zh { font-family:var(--bk-serif-zh); font-size:15pt; letter-spacing:0.3em; margin-top:4mm; color:rgba(245,239,226,0.85); }
-  .bk-cover .bk-orn { --bk-gold:#e3b341; margin:7mm auto; }
-  .bk-cover-author { font-family:var(--bk-serif); font-style:italic; font-size:14pt; color:#f5efe2; }
-  .bk-cover-foot { font-family:var(--bk-sans); font-size:7pt; letter-spacing:0.18em; text-transform:uppercase; color:rgba(245,239,226,0.6); }
-
-  /* Back cover */
-  .bk-back { background:#13293a; background-image:radial-gradient(ellipse at 50% 60%, #1d445f 0%, #0f2231 100%); color:#f5efe2; }
-  .bk-back-inner { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
-  .bk-back-logo { font-family:var(--bk-serif); font-size:22pt; color:#fffaf0; letter-spacing:0.02em; }
-  .bk-back-zh { font-family:var(--bk-serif-zh); font-size:11pt; letter-spacing:0.5em; color:#e3b341; margin-top:3mm; }
-  .bk-back .bk-orn { --bk-gold:#e3b341; margin:8mm auto; }
-  .bk-back-note { font-family:var(--bk-sans); font-size:7.5pt; letter-spacing:0.12em; color:rgba(245,239,226,0.65); line-height:1.8; }
-
-  /* Title page */
-  .bk-tp { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; text-align:center; }
-  .bk-tp-top { padding-top:22mm; }
-  .bk-tp-title { font-family:var(--bk-serif); font-size:26pt; line-height:1.2; color:var(--bk-navy); font-weight:600; margin-top:9mm; }
-  .bk-tp-zh { font-family:var(--bk-serif-zh); font-size:13pt; letter-spacing:0.28em; color:#555; margin-top:3mm; }
-  .bk-tp-author { font-family:var(--bk-serif); font-style:italic; font-size:13pt; color:#444; }
-  .bk-tp-ed { font-family:var(--bk-sans); font-size:7.5pt; letter-spacing:0.3em; text-transform:uppercase; color:var(--bk-accent); margin-top:5mm; }
-  .bk-howto { margin-top:auto; width:100%; text-align:left; border:0.5pt solid var(--bk-rule); border-top:1.4pt solid var(--bk-gold); background:var(--bk-cream); padding:5mm 6mm 4.5mm; border-radius:0 0 1.5mm 1.5mm; }
-  .bk-howto h3 { font-family:var(--bk-sans); font-size:8pt; letter-spacing:0.24em; text-transform:uppercase; color:var(--bk-navy); margin:0 0 3mm; }
-  .bk-howto h3 span { font-family:var(--bk-serif-zh); letter-spacing:0.2em; color:var(--bk-muted); margin-left:2mm; font-weight:400; }
-  .bk-howto ol { margin:0; padding-left:5mm; }
-  .bk-howto li { font-size:9pt; line-height:1.45; margin-bottom:2.2mm; }
-  .bk-howto li .zh { display:block; font-family:var(--bk-serif-zh); font-size:8.6pt; color:#666; }
-  .bk-howto .bk-demo { font-weight:600; color:var(--bk-navy); border-bottom:0.7pt solid var(--bk-gold); }
-  .bk-colophon { margin-top:6mm; font-family:var(--bk-sans); font-size:6.8pt; letter-spacing:0.08em; color:var(--bk-muted); line-height:1.7; }
-  .bk-colophon b { color:var(--bk-navy); letter-spacing:0.14em; text-transform:uppercase; }
-
-  /* Contents */
-  .bk-toc-head { text-align:center; padding:10mm 0 6mm; }
-  .bk-toc-h { font-family:var(--bk-serif); font-size:22pt; color:var(--bk-navy); font-weight:600; }
-  .bk-toc-hzh { font-family:var(--bk-serif-zh); font-size:10pt; letter-spacing:0.5em; color:var(--bk-muted); margin-top:1.5mm; }
-  .bk-toc-entry { margin:0 0 3.4mm; }
-  .bk-toc-line { display:flex; align-items:baseline; text-decoration:none; color:inherit; }
-  .bk-toc-ch .bk-toc-n { flex:0 0 11mm; font-family:var(--bk-serif); font-size:15pt; color:var(--bk-gold); line-height:1.2; }
-  .bk-toc-ch .bk-toc-t { font-family:var(--bk-serif); font-size:12pt; font-weight:600; color:var(--bk-navy); }
-  .bk-toc-sec { padding-left:11mm; margin-top:0.8mm; }
-  .bk-toc-sec .bk-toc-t { font-size:9pt; color:#555; }
-  .bk-toc-t { flex:0 1 auto; }
-  .bk-toc-dots { flex:1 1 8mm; min-width:8mm; margin:0 2mm; border-bottom:0.9pt dotted #bdb5a3; transform:translateY(-0.28em); }
-  .bk-toc-p { flex:0 0 auto; min-width:7mm; text-align:right; font-family:var(--bk-serif); font-size:10pt; color:var(--bk-navy); }
-  .bk-toc-sec .bk-toc-p { font-size:8.6pt; color:var(--bk-muted); }
-
-  /* Glossary */
-  .bk-gl-head { text-align:center; padding:10mm 0 5mm; }
-  .bk-gl-cols { display:grid; grid-template-columns:1fr 1fr; column-gap:8mm; align-items:start; }
-  .bk-gl-col { display:flow-root; }
-  .bk-gl-letter { font-family:var(--bk-serif); font-size:15pt; color:var(--bk-gold); border-bottom:0.5pt solid var(--bk-rule); margin:1mm 0 2mm; line-height:1.3; }
-  .bk-gl-e { margin:0 0 2.4mm; font-size:8.6pt; line-height:1.42; break-inside:avoid; }
-  .bk-gl-w { font-weight:700; color:var(--bk-navy); font-size:9.4pt; }
-  .bk-gl-ipa { color:#56789a; margin-left:1mm; font-family:"Lucida Sans Unicode","Segoe UI","Arial Unicode MS","DejaVu Sans",sans-serif; font-size:7.8pt; }
-  .bk-gl-zh { color:var(--bk-accent); font-family:var(--bk-serif-zh); margin-left:1.2mm; }
-  .bk-gl-x { color:#444; }
-  .bk-gl-ex { color:#777; font-style:italic; }
-  .bk-gl-pg { font-family:var(--bk-sans); font-size:6.8pt; color:var(--bk-muted); letter-spacing:0.04em; }
-  .bk-gl-pg a { color:inherit; text-decoration:none; }
-
-  a.bk-link { color:inherit; text-decoration:none; }
-  .bk-anchor { display:block; height:0; }
-
-  /* Ink-saver: white covers, no tinted boxes (for home/school printers) */
-  .bk-ink.bk-cover, .bk-ink.bk-back { background:#fff; background-image:none; color:var(--bk-navy); }
-  .bk-ink .bk-cover-title, .bk-ink .bk-back-logo { color:var(--bk-navy); }
-  .bk-ink .bk-cover-zh, .bk-ink .bk-cover-author, .bk-ink .bk-cover-foot, .bk-ink .bk-back-note { color:#555; }
-  .bk-ink .bk-cover-brand, .bk-ink .bk-cover-kicker, .bk-ink .bk-back-zh { color:var(--bk-accent); }
-  .bk-ink .bk-cover-brand span { color:var(--bk-muted); }
-  .bk-ink .bk-cover-img { border-color:#fff; box-shadow:0 0 0 0.4pt rgba(0,0,0,0.25); }
-  .bk-ink .bk-cover .bk-orn, .bk-ink .bk-back .bk-orn { --bk-gold:#c9971c; }
-  .bk-ink .bk-gloss, .bk-ink .bk-howto { background:#fff; }
-
-  @media print {
-    @page { size:A4; margin:0; }
-    html, body { background:#fff !important; margin:0 !important; padding:0 !important; overflow:visible !important; height:auto !important; }
-    body > *:not(#printArea) { display:none !important; }
-    #printArea { display:block !important; }
-    #printMeasureSandbox { display:none !important; }
   }
 /* ═══ Visual refresh (appearance & layout only) ═══ */
 @media screen {
@@ -570,29 +346,6 @@
     <button class="btn btn-outline" id="darkModeToggle" title="Toggle dark mode">🌙 Dark Mode</button>
     <button class="btn btn-outline" id="readAloudBtn" title="Read the English text aloud">🔊 Read Aloud</button>
     <button class="btn btn-outline" id="notesPanelBtn" title="View all your highlights and notes">📒 My Notes<span class="notes-panel-btn-count" id="notesPanelBtnCount" style="display:none;"></span></button>
-    <div class="print-dropdown-wrap">
-      <button class="btn btn-gold print-dropdown-toggle" id="printDropdownToggle">
-        🖨️ Print <span class="arrow">▾</span>
-      </button>
-      <div class="print-dropdown-menu" id="printDropdownMenu">
-        <button class="dropdown-item" data-mode="preview-section">
-          <span class="icon">📄</span>
-          <span class="label">Preview Current Section</span>
-        </button>
-        <button class="dropdown-item" data-mode="preview-chapter">
-          <span class="icon">📚</span>
-          <span class="label">Preview Whole Chapter</span>
-        </button>
-        <button class="dropdown-item" data-mode="preview-book">
-          <span class="icon">📖</span>
-          <span class="label">Preview Entire Book (eBook)</span>
-        </button>
-        <button class="dropdown-item" data-mode="pdf" title="Builds the whole designed eBook and opens the print dialog — choose Save as PDF, Paper size A4, Margins Default or None.">
-          <span class="icon">💾</span>
-          <span class="label">Save eBook as PDF</span>
-        </button>
-      </div>
-    </div>
     <span style="margin-left:auto; font-size:0.82rem; color:#555;">💡 Tap highlighted words · Select text to highlight or add a note</span>
     <label style="font-weight:400; margin-left:0.4rem; font-size:0.9rem;">Mode:
       <select id="readingModeSelect">
@@ -618,8 +371,6 @@
     </select>
     <audio id="sectionAudio" controls></audio>
   </div>
-
-  <div id="tsPanel" style="display:none;"></div>
 
   <div id="sectionTabs"></div>
   <div id="sectionProgress"></div>
@@ -654,22 +405,6 @@
   <div class="quiz-box"><h3>❓ Comprehension Verification</h3><div id="tfQuestions"></div><button class="btn" id="checkTfBtn">✅ Check Answers</button><div id="tfFeedback" class="feedback"></div></div>
 
   <div id="sectionBottomNav" class="section-bottom-nav" style="display:none;"></div>
-
-  <div id="printArea"></div>
-
-  <div id="printPreviewOverlay" class="print-preview-overlay">
-    <div class="print-preview-toolbar">
-      <span class="pp-title">📖 eBook Preview <span class="pp-count" id="ppPageCount"></span></span>
-      <label class="pp-opt" title="Show vocabulary notes under each paragraph"><input type="checkbox" id="ppShowGloss" checked> Vocabulary notes</label>
-      <label class="pp-opt" id="ppGlossaryWrap" title="Add an A–Z glossary of all vocabulary, with page numbers, at the back of the book"><input type="checkbox" id="ppGlossary" checked> Glossary</label>
-      <label class="pp-opt" title="Start every section on a new page — handy for one-section handouts"><input type="checkbox" id="ppSectionPageBreak"> New page per section</label>
-      <label class="pp-opt" title="White covers and no tinted boxes — saves ink on school printers"><input type="checkbox" id="ppInkSaver"> Ink saver</label>
-      <button class="pp-print-btn" id="ppPrintNowBtn">💾 Save as PDF / Print</button>
-      <button class="pp-close-btn" id="ppCloseBtn">✕ Close</button>
-      <div class="pp-hint">In the print dialog choose <b>Save as PDF</b> · Paper size <b>A4</b> · Margins <b>Default</b> or <b>None</b> · Scale <b>100%</b>. The contents page, chapter links and glossary page numbers are clickable in the PDF.</div>
-    </div>
-    <div class="print-preview-paper" id="printPreviewPaper"></div>
-  </div>
 
   <div id="notesPanelOverlay" class="notes-panel-overlay">
     <div class="notes-panel-inner">
@@ -2602,8 +2337,7 @@
         }
       ]
     }
-  ],
-  "titleZh": "卡拉马佐夫兄弟"
+  ]
 }</script>
 <script id="vocabDataScript" type="application/json">{
   "confess": {
@@ -5072,7 +4806,6 @@
         vocabDefinitions = JSON.parse(vocabEl.textContent) || {};
       } catch (e) {
         showError("Vocabulary JSON parse error: " + e.message);
-        // Not fatal — keep going with no vocab data rather than blocking the whole book.
       }
     }
 
@@ -5090,9 +4823,6 @@
     const FONT_SCALE_MAX = 1.8;
     const FONT_SCALE_STEP = 0.1;
     let fontScale = 1;
-    // Includes author + chapter count so two different books that happen to share
-    // a title don't clobber each other's saved progress (still stable across
-    // regenerating the *same* book, since none of these three normally change).
     // Old builds keyed storage on the chapter count, so adding a chapter wiped
     // everyone's progress and notes. New builds use a stable bookId instead.
     const LEGACY_BOOK_KEY = bookData.title + "::" + (bookData.author || "") + "::" + (bookData.chapters ? bookData.chapters.length : 0);
@@ -5114,10 +4844,6 @@
     const PAGE_SIZE = 6;
     const placeholderQuiz = [{ text: "This section has no quiz yet.", answer: true, rationale: "" }];
 
-    // ----- Highlights & notes: stored keyed by paragraph so render-time lookup is O(1).
-    // Key shape: "<chapterIdx>_<scope>_<paragraphIdx>_<col>" where scope is "sFULL"/"s<n>"/"p<n>"
-    // depending on reading mode, so a highlight made in one mode/section/page doesn't
-    // bleed into another. Each paragraph's list holds independent {start,end} ranges. -----
     let annotations = {};
     function loadAnnotations() {
       try {
@@ -5222,6 +4948,7 @@
       const secs = currentChapter.sections || [];
       const chapterAudio = chapterLevelAudio();
       if (forFull) {
+        // Options: whole-chapter audio (value -1, if the chapter has any) + every section that has audio.
         const opts = [];
         if (hasAudioData(chapterAudio)) opts.push(-1);
         secs.forEach((s, i) => { if (hasAudioData(s)) opts.push(i); });
@@ -5370,10 +5097,6 @@
       applyMobileLang(mobileLang);
     }
 
-    // Returns a paragraph's images as a normalized array of {src, alt},
-    // regardless of whether it uses the newer multi-image "images" array or
-    // the older single "image"/"imageAlt" fields (kept for backward
-    // compatibility with books created before multi-image support existed).
     function getParagraphImages(p) {
       if (Array.isArray(p.images) && p.images.length) {
         return p.images.map(im => ({ src: im.src, alt: im.alt || 'illustration' }));
@@ -5384,10 +5107,6 @@
       return [];
     }
 
-    // ----- Highlight/note range utilities -----
-    // These walk an element's text nodes in document order, so they work correctly
-    // regardless of nested inline tags (like .vocab-trigger spans) inside a paragraph —
-    // offsets are always counted against the paragraph's flattened, tag-free text.
     function collectTextNodesInOrder(root) {
       const nodes = [];
       (function walk(n) {
@@ -5406,9 +5125,6 @@
       })(root);
       return total;
     }
-    // Wraps the [start,end) character range (against root's flattened text) with
-    // whatever wrapFn builds, one Range per text node the selection spans (a
-    // selection crossing a nested span boundary produces more than one wrapped piece).
     function wrapRangeInElement(root, start, end, wrapFn) {
       let pos = 0;
       const textNodes = collectTextNodesInOrder(root);
@@ -5436,13 +5152,9 @@
           mark.dataset.hlId = id;
           range.surroundContents(mark);
         });
-      } catch (e) { /* stale offsets (e.g. edited source text) — skip rather than corrupt the DOM */ }
+      } catch (e) { }
     }
 
-    // A highlight belongs to one exact spot: which chapter, which reading-mode scope
-    // (section/page/full — paragraph numbering differs between them), which paragraph,
-    // which column, and which text variant (Original vs Simplified have different text,
-    // so a highlight made in one must not be replayed against offsets in the other).
     function currentAnnotationScope() {
       if (readingMode === 'sections') return { mode: 'sections', sectionIdx: currentSection };
       if (readingMode === 'pages') return { mode: 'pages', pageIdx: currentPage };
@@ -5495,7 +5207,6 @@
       if (zhColEl) zhColEl.scrollTop = 0;
     }
 
-    // ----- Dark Mode Toggle -----
     document.getElementById('darkModeToggle').addEventListener('click', function() {
       darkMode = !darkMode;
       document.body.classList.toggle('dark-mode', darkMode);
@@ -5511,743 +5222,11 @@
       }
     } catch(e) {}
 
-    // ===================== eBook print engine =====================
-    // Builds a finished, book-quality A4 edition: full-bleed cover, title page,
-    // clickable contents, chapter openers, running heads, parallel English/Chinese
-    // text with vocabulary notes, figures with captions, an A–Z glossary with page
-    // references, and a back cover. Every page is an exact A4 sheet laid out by JS
-    // (browsers don't repeat running heads/page numbers or support @page margin
-    // boxes), measured against the real rendered size of each block.
     function printEscapeHtml(text) {
       const d = document.createElement('div');
       d.textContent = text == null ? '' : String(text);
       return d.innerHTML;
     }
-    // For text going into an HTML attribute (e.g. alt="..."), textContent-based
-    // escaping isn't enough because it doesn't escape quotes.
-    function printEscapeAttr(text) {
-      return String(text == null ? '' : text).replace(/[&<>"']/g, function(m) {
-        return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m];
-      });
-    }
-    const esc = printEscapeHtml;
-
-    // ----- Print options (remembered on this device) -----
-    const PRINT_OPTS_KEY = 'wt_printOpts';
-    const printOpts = { gloss: true, glossary: true, sectionBreak: false, inkSaver: false };
-    try { Object.assign(printOpts, JSON.parse(localStorage.getItem(PRINT_OPTS_KEY)) || {}); } catch (e) {}
-    function savePrintOpts() { try { localStorage.setItem(PRINT_OPTS_KEY, JSON.stringify(printOpts)); } catch (e) {} }
-
-    // ----- Page geometry (must match the .bk-page / .bk-body CSS) -----
-    const MM = 96 / 25.4;
-    const PAGE_W_MM = 210, PAGE_H_MM = 296.5;
-    const BODY_TOP_MM = 21, BODY_BOTTOM_MM = 20, BODY_SIDE_MM = 19;
-    const BODY_W_PX = (PAGE_W_MM - BODY_SIDE_MM * 2) * MM;
-    const BODY_H_PX = (PAGE_H_MM - BODY_TOP_MM - BODY_BOTTOM_MM) * MM;
-    // A little slack so tiny print-engine rounding differences can never push a line off the page.
-    const USABLE_H_PX = Math.floor(BODY_H_PX * 0.97);
-    // A heading must have at least this much room below it, or it moves to the next page.
-    const KEEP_NEXT_PX = 26 * MM;
-    const GL_GAP_MM = 8;
-    const GL_COL_W_PX = ((PAGE_W_MM - BODY_SIDE_MM * 2 - GL_GAP_MM) / 2) * MM;
-
-    function getMeasureSandbox(widthPx) {
-      let box = document.getElementById('printMeasureSandbox');
-      if (!box) {
-        box = document.createElement('div');
-        box.id = 'printMeasureSandbox';
-        document.body.appendChild(box);
-      }
-      box.style.width = widthPx + 'px';
-      return box;
-    }
-    function measure(html, widthPx) {
-      const box = getMeasureSandbox(widthPx || BODY_W_PX);
-      box.innerHTML = html;
-      return box.getBoundingClientRect().height;
-    }
-
-    // ----- Small helpers -----
-    function toRoman(n) {
-      const map = [[1000,'m'],[900,'cm'],[500,'d'],[400,'cd'],[100,'c'],[90,'xc'],[50,'l'],[40,'xl'],[10,'x'],[9,'ix'],[5,'v'],[4,'iv'],[1,'i']];
-      let out = '';
-      map.forEach(([v, s]) => { while (n >= v) { out += s; n -= v; } });
-      return out;
-    }
-    function zhNum(n) {
-      const d = '零一二三四五六七八九';
-      if (!(n > 0) || n >= 1000) return String(n);
-      if (n < 10) return d[n];
-      if (n < 20) return '十' + (n % 10 ? d[n % 10] : '');
-      if (n < 100) return d[Math.floor(n / 10)] + '十' + (n % 10 ? d[n % 10] : '');
-      const h = Math.floor(n / 100), r = n % 100;
-      if (r === 0) return d[h] + '百';
-      if (r < 10) return d[h] + '百零' + d[r];
-      return d[h] + '百' + (r < 20 ? '一' + zhNum(r) : zhNum(r));
-    }
-    function chapterNumber(ch, ci) {
-      const s = String(ch && ch.id != null ? ch.id : '').trim();
-      return /^[0-9]+$/.test(s) ? parseInt(s, 10) : ci + 1;
-    }
-    function chapterLabel(ch, ci) { return (ch && ch.title) ? ch.title : ('Chapter ' + chapterNumber(ch, ci)); }
-    // A title like "Chapter 3" adds nothing next to the "Chapter 3" kicker, so it's not repeated.
-    function chapterTitleIsRedundant(ch) { return !ch || !ch.title || /^\s*chapter\s*[0-9ivxlc]+\s*$/i.test(ch.title); }
-    function textLength(html) { return String(html || '').replace(/<[^>]*>/g, '').replace(/&[#a-z0-9]+;/gi, 'x').length; }
-    function decodeAttr(s) {
-      return String(s).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-    }
-    function vocabKeysIn(html) {
-      const keys = [], seen = {};
-      const re = /data-vocab="([^"]*)"/g;
-      let m;
-      while ((m = re.exec(html || '')) !== null) {
-        const k = decodeAttr(m[1]);
-        if (!seen[k]) { seen[k] = true; keys.push(k); }
-      }
-      return keys;
-    }
-    function paraEn(p) { return isSimplified ? (p.simpEn || p.en || '') : (p.en || ''); }
-    function paraZh(p) { return isSimplified ? (p.simpZh || p.zh || '') : (p.zh || ''); }
-    function chapterParagraphs(ch) {
-      if (ch && ch.sections && ch.sections.length) return ch.sections.reduce((a, s) => a.concat(s.paragraphs || []), []);
-      return (ch && ch.paragraphs) || [];
-    }
-
-    // ----- Sentence splitting (used to break long paragraphs across pages) -----
-    // Splits English HTML after . ! ? … (plus any closing quotes/brackets/tags) when
-    // followed by whitespace, and never inside an open tag such as a vocab <span>.
-    function splitEnglishSentences(html) {
-      const src = String(html || '');
-      if (!src.trim()) return [''];
-      const out = [];
-      let buf = '', depth = 0, i = 0;
-      const isSpace = (ch) => ch === ' ' || ch === '\n' || ch === '\t' || ch === '\r' || ch === ' ';
-      while (i < src.length) {
-        const c = src[i];
-        if (c === '<') {
-          const j = src.indexOf('>', i);
-          const tag = j === -1 ? src.slice(i) : src.slice(i, j + 1);
-          if (/^<\//.test(tag)) depth = Math.max(0, depth - 1);
-          else if (!/\/>$/.test(tag) && !/^<(br|img|hr|wbr)\b/i.test(tag)) depth++;
-          buf += tag; i += tag.length;
-          continue;
-        }
-        buf += c; i++;
-        if ('.!?…'.indexOf(c) !== -1) {
-          while (i < src.length) {
-            const d = src[i];
-            if ('.!?…"\'”’)]'.indexOf(d) !== -1) { buf += d; i++; continue; }
-            if (d === '<' && src[i + 1] === '/') {
-              const j = src.indexOf('>', i);
-              if (j === -1) break;
-              buf += src.slice(i, j + 1); i = j + 1; depth = Math.max(0, depth - 1);
-              continue;
-            }
-            break;
-          }
-          if (depth === 0 && (i >= src.length || isSpace(src[i]))) {
-            while (i < src.length && isSpace(src[i])) i++;
-            if (buf.trim()) out.push(buf.trim());
-            buf = '';
-          }
-        }
-      }
-      if (buf.trim()) out.push(buf.trim());
-      return out.length ? out : [''];
-    }
-    // Splits Chinese text after 。！？!?；… keeping closing quotes with their sentence.
-    function splitChineseSentences(text) {
-      const src = String(text || '');
-      if (!src.trim()) return [''];
-      const out = [];
-      let buf = '';
-      for (let i = 0; i < src.length; i++) {
-        buf += src[i];
-        if ('。！？!?；…'.indexOf(src[i]) !== -1) {
-          while (i + 1 < src.length && '。！？!?…”’」』）)"\''.indexOf(src[i + 1]) !== -1) { buf += src[++i]; }
-          if (buf.trim()) out.push(buf.trim());
-          buf = '';
-        }
-      }
-      if (buf.trim()) out.push(buf.trim());
-      return out.length ? out : [''];
-    }
-
-    // ----- Images: natural sizes are preloaded so figures get exact, measurable sizes -----
-    const imgDims = {};
-    function allBookImageSrcs() {
-      const srcs = [];
-      if (bookData.coverImage) srcs.push(bookData.coverImage);
-      (bookData.chapters || []).forEach(ch => chapterParagraphs(ch).forEach(p => getParagraphImages(p).forEach(im => { if (im.src) srcs.push(im.src); })));
-      return srcs;
-    }
-    function preloadImageDims() {
-      const todo = allBookImageSrcs().filter(src => !(src in imgDims));
-      if (!todo.length) return Promise.resolve();
-      return new Promise(resolve => {
-        let left = todo.length;
-        const done = () => { if (--left <= 0) resolve(); };
-        todo.forEach(src => {
-          imgDims[src] = null;
-          const im = new Image();
-          im.onload = () => { imgDims[src] = { w: im.naturalWidth, h: im.naturalHeight }; done(); };
-          im.onerror = done;
-          im.src = src;
-        });
-        setTimeout(resolve, 5000);
-      });
-    }
-    let imgDimsReady = preloadImageDims();
-
-    function captionFor(alt) {
-      const a = String(alt || '').trim();
-      return /^(illustration|image|picture|photo|img|figure|pic)?$/i.test(a) ? '' : a;
-    }
-    function figureHtml(images) {
-      const n = images.length;
-      const perRow = Math.min(n, 3);
-      const gap = 4 * MM;
-      const maxW = n === 1 ? BODY_W_PX * 0.8 : (BODY_W_PX - gap * (perRow - 1)) / perRow;
-      const maxH = (n === 1 ? 88 : 62) * MM;
-      const figs = images.map(im => {
-        const d = imgDims[im.src];
-        let w, h;
-        if (d && d.w && d.h) {
-          const s = Math.min(maxW / d.w, maxH / d.h, 1.25);
-          w = d.w * s; h = d.h * s;
-        } else {
-          w = maxW; h = maxH * 0.75;
-        }
-        const cap = captionFor(im.alt);
-        const figW = cap ? Math.max(w, Math.min(maxW, 45 * MM)) : w;
-        return '<figure style="width:' + figW.toFixed(1) + 'px">' +
-          '<img src="' + printEscapeAttr(im.src) + '" alt="' + printEscapeAttr(im.alt) + '" style="width:' + w.toFixed(1) + 'px;height:' + h.toFixed(1) + 'px">' +
-          (cap ? '<figcaption>' + esc(cap) + '</figcaption>' : '') +
-        '</figure>';
-      });
-      return '<div class="bk-fig">' + figs.join('') + '</div>';
-    }
-
-    // ----- Paragraph blocks -----
-    function glossHtml(keys) {
-      if (!printOpts.gloss || !keys.length) return '';
-      const items = [];
-      keys.forEach(key => {
-        const def = vocabDefinitions[key];
-        if (!def) return;
-        const explain = def.explain || def.simple || '';
-        items.push('<span class="bk-g"><span class="bk-g-w">' + esc(key) + '</span>' +
-          (def.ipa ? '<span class="bk-g-ipa">' + esc(def.ipa) + '</span>' : '') +
-          (def.zh ? '<span class="bk-g-zh">' + esc(def.zh) + '</span>' : '') +
-          (explain ? '<span class="bk-g-x">' + esc(explain) + '</span>' : '') +
-        '</span>');
-      });
-      return items.length ? '<div class="bk-gloss">' + items.join('<span class="bk-g-sep">•</span>') + '</div>' : '';
-    }
-    function paraHtml(enSlice, zhSlice, num, isFirst) {
-      const en = enSlice.join(' ');
-      const zh = zhSlice.map(esc).join('');
-      const pn = '<span class="bk-pn' + (isFirst ? '' : ' bk-cont') + '"' + (isFirst ? '' : ' title="continued"') + '>' + num + '</span>';
-      return '<div class="bk-para"><div class="bk-row">' + pn +
-          '<div class="bk-en" lang="en">' + en + '</div>' +
-          '<div class="bk-zh" lang="zh-Hans">' + zh + '</div>' +
-        '</div>' + glossHtml(vocabKeysIn(en)) + '</div>';
-    }
-    function paragraphItems(paragraphs) {
-      const items = [];
-      (paragraphs || []).forEach((p, idx) => {
-        const images = getParagraphImages(p);
-        if (images.length) items.push({ type: 'html', html: figureHtml(images) });
-        const en = paraEn(p), zh = paraZh(p);
-        if (!String(en).trim() && !String(zh).trim()) return;
-        items.push({ type: 'para', num: idx + 1, en: splitEnglishSentences(en), zh: splitChineseSentences(zh) });
-      });
-      return items;
-    }
-    function colsLabelHtml() {
-      return '<div class="bk-cols-label"><div>English</div><div>中文 · Chinese</div></div>';
-    }
-    function sectionHeadHtml(n, heading, anchor) {
-      return (anchor ? '<span class="bk-anchor" id="bk-' + anchor + '" data-anchor="' + anchor + '"></span>' : '') +
-        '<div class="bk-sec"><span class="bk-sec-n">' + n + '</span><span class="bk-sec-t">' + esc(heading || ('Section ' + n)) + '</span></div>';
-    }
-    function ornHtml() { return '<div class="bk-orn"><i></i></div>'; }
-
-    // ----- Pagination -----
-    // Items: {type:'context', chapter, folio}  sets running-head label / numbering style
-    //        {type:'break'}                     start a new page
-    //        {type:'html', html, keepNext, opener}  atomic block
-    //        {type:'para', num, en[], zh[]}     paragraph that may split at sentence boundaries
-    //        {type:'page', html, cls, folio, wrap, hideFolio}  a complete designed page
-    function paginate(items) {
-      const pages = [];
-      const ctx = { chapter: '', folio: 'arabic' };
-      let cur = null;
-      function fresh() { cur = { html: [], h: 0, chapter: ctx.chapter, folio: ctx.folio, opener: false, wrap: true }; }
-      function flush() { if (cur && cur.html.length) { cur.html = cur.html.join(''); pages.push(cur); } fresh(); }
-      function place(html, h, opener) {
-        if (!cur.html.length) { cur.chapter = ctx.chapter; cur.folio = ctx.folio; cur.opener = !!opener; }
-        cur.html.push(html); cur.h += h;
-      }
-      fresh();
-      const queue = items.slice();
-      while (queue.length) {
-        const item = queue.shift();
-        if (item.type === 'context') {
-          if ('chapter' in item) ctx.chapter = item.chapter;
-          if ('folio' in item) ctx.folio = item.folio;
-        } else if (item.type === 'break') {
-          flush();
-        } else if (item.type === 'page') {
-          flush();
-          pages.push({ html: item.html, full: true, cls: item.cls || '', folio: item.folio || 'none', wrap: !!item.wrap, hideFolio: !!item.hideFolio, chapter: item.chapter || '', noHead: true });
-        } else if (item.type === 'html') {
-          const h = measure(item.html);
-          const need = h + (item.keepNext ? KEEP_NEXT_PX : 0);
-          if (cur.html.length && cur.h + need > USABLE_H_PX) flush();
-          place(item.html, h, item.opener);
-        } else if (item.type === 'para') {
-          const isFirst = !item.continued;
-          const remaining = USABLE_H_PX - cur.h;
-          const whole = paraHtml(item.en, item.zh, item.num, isFirst);
-          const hWhole = measure(whole);
-          if (hWhole <= remaining) { place(whole, hWhole); continue; }
-          const canSplit = item.en.length > 1 && item.zh.length > 1;
-          if (!canSplit) {
-            if (cur.html.length) { flush(); queue.unshift(item); }
-            else place(whole, hWhole); // taller than a whole page and unsplittable: nothing better possible
-            continue;
-          }
-          // Chinese is cut at the sentence whose share of the text best matches the English share.
-          const enCum = [0], zhCum = [0];
-          item.en.forEach(s => enCum.push(enCum[enCum.length - 1] + textLength(s)));
-          item.zh.forEach(s => zhCum.push(zhCum[zhCum.length - 1] + s.length));
-          const enTot = enCum[enCum.length - 1] || 1, zhTot = zhCum[zhCum.length - 1] || 1;
-          const zhCutFor = (k) => {
-            const frac = enCum[k] / enTot;
-            let best = 1, bestDiff = Infinity;
-            for (let z = 1; z < item.zh.length; z++) {
-              const diff = Math.abs(zhCum[z] / zhTot - frac);
-              if (diff < bestDiff) { bestDiff = diff; best = z; }
-            }
-            return best;
-          };
-          let fit = null;
-          for (let k = 1; k < item.en.length; k++) {
-            const zc = zhCutFor(k);
-            const html = paraHtml(item.en.slice(0, k), item.zh.slice(0, zc), item.num, isFirst);
-            const h = measure(html);
-            if (h <= remaining) fit = { k, zc, html, h }; else break;
-          }
-          // Don't strand a scrap (a very short first part at the foot of the page, or a
-          // very short remainder at the top of the next) — move the paragraph whole instead.
-          if (fit && cur.html.length) {
-            const firstLen = enCum[fit.k], restLen = enTot - enCum[fit.k];
-            if (firstLen < Math.min(90, enTot * 0.3) || restLen < Math.min(70, enTot * 0.25)) fit = null;
-          }
-          if (!fit && !cur.html.length) {
-            const zc = zhCutFor(1);
-            const html = paraHtml(item.en.slice(0, 1), item.zh.slice(0, zc), item.num, isFirst);
-            fit = { k: 1, zc, html, h: measure(html) };
-          }
-          if (!fit) { flush(); queue.unshift(item); continue; }
-          place(fit.html, fit.h);
-          flush();
-          queue.unshift(Object.assign({}, item, { en: item.en.slice(fit.k), zh: item.zh.slice(fit.zc), continued: true }));
-        }
-      }
-      flush();
-      return pages;
-    }
-
-    function assignNumbers(pages) {
-      let a = 0, r = 0;
-      pages.forEach(p => {
-        p.num = 0; p.label = '';
-        if (p.folio === 'arabic') { a++; p.num = a; p.label = String(a); }
-        else if (p.folio === 'roman') { r++; p.label = toRoman(r); }
-      });
-    }
-    function anchorPages(pages) {
-      const where = {};
-      pages.forEach(p => {
-        const re = /data-anchor="([^"]+)"/g;
-        let m;
-        while ((m = re.exec(p.html)) !== null) if (!(m[1] in where)) where[m[1]] = p.label;
-      });
-      return where;
-    }
-    function resolvePageRefs(pages) {
-      const where = anchorPages(pages);
-      pages.forEach(p => {
-        p.html = p.html.replace(/data-pg="([^"]+)">000</g, (m, key) => 'data-pg="' + key + '">' + (where[key] || '') + '<');
-      });
-    }
-
-    function renderPages(pages, runningTitle) {
-      const ink = printOpts.inkSaver ? ' bk-ink' : '';
-      return pages.map(p => {
-        const showFolio = p.folio !== 'none' && !p.hideFolio;
-        const head = (!p.noHead && !p.opener && p.folio !== 'none')
-          ? '<div class="bk-head"><span class="bk-head-l">' + esc(runningTitle) + '</span><span class="bk-head-r">' + esc(p.chapter || '') + '</span></div>'
-          : '';
-        const foot = showFolio
-          ? '<div class="bk-foot"><span class="bk-foot-brand"><b>Words That Think</b> · 品词坊</span><span class="bk-folio">' + p.label + '</span></div>'
-          : '';
-        const body = (p.full && !p.wrap) ? p.html : '<div class="bk-body bk-flow">' + p.html + '</div>';
-        return '<section class="bk-page' + (p.cls ? ' ' + p.cls : '') + ink + '"' + (p.num ? ' id="bk-pg-' + p.num + '"' : '') + '>' + body + head + foot + '</section>';
-      }).join('');
-    }
-
-    // ----- Whole-book designed pages -----
-    function bookHasGlossaryWords() {
-      if (!printOpts.glossary) return false;
-      return (bookData.chapters || []).some(ch => chapterParagraphs(ch).some(p => vocabKeysIn(paraEn(p)).some(k => vocabDefinitions[k])));
-    }
-    function coverHtml() {
-      const title = bookData.title || '';
-      const n = (bookData.chapters || []).length;
-      const hasImg = !!bookData.coverImage;
-      const len = title.length;
-      let size = len <= 18 ? 36 : len <= 32 ? 30 : len <= 60 ? 24 : 19;
-      if (hasImg) size = Math.round(size * 0.85);
-      return '<div class="bk-cover-frame"></div>' +
-        '<div class="bk-cover-inner">' +
-          '<div class="bk-cover-brand">Words That Think<span>品词坊 · 以词启思</span></div>' +
-          '<div class="bk-cover-mid">' +
-            (hasImg ? '<img class="bk-cover-img" src="' + printEscapeAttr(bookData.coverImage) + '" alt="">' : '') +
-            '<div class="bk-cover-kicker">Bilingual Edition · <span>中英双语版</span></div>' +
-            '<div class="bk-cover-title" style="font-size:' + size + 'pt">' + esc(title) + '</div>' +
-            (bookData.titleZh ? '<div class="bk-cover-zh">' + esc(bookData.titleZh) + '</div>' : '') +
-            ornHtml() +
-            (bookData.author ? '<div class="bk-cover-author">' + esc(bookData.author) + '</div>' : '') +
-          '</div>' +
-          '<div class="bk-cover-foot">English · 中文 parallel text' + (Object.keys(vocabDefinitions).length ? ' · vocabulary notes' : '') + ' · ' + n + ' chapter' + (n === 1 ? '' : 's') + '</div>' +
-        '</div>';
-    }
-    function titlePageHtml(hasGlossary) {
-      const year = new Date().getFullYear();
-      return '<div class="bk-tp">' +
-        '<div class="bk-tp-top">' +
-          '<div class="bk-brand-line">Words That Think<span>品词坊 · 以词启思</span></div>' +
-          '<div class="bk-tp-title">' + esc(bookData.title || '') + '</div>' +
-          (bookData.titleZh ? '<div class="bk-tp-zh">' + esc(bookData.titleZh) + '</div>' : '') +
-          ornHtml() +
-          (bookData.author ? '<div class="bk-tp-author">' + esc(bookData.author) + '</div>' : '') +
-          '<div class="bk-tp-ed">Bilingual Edition · 中英双语版' + (isSimplified ? ' · Simplified Text 简化版' : '') + '</div>' +
-        '</div>' +
-        '<div class="bk-howto"><h3>How to read this book<span>阅读说明</span></h3><ol>' +
-          '<li>Each numbered paragraph appears in English on the left and in Chinese on the right.<span class="zh">每段英文（左）与中文（右）并排对照，编号一致。</span></li>' +
-          (printOpts.gloss ? '<li>Words marked like <span class="bk-demo">this</span> are explained in a short note under the paragraph.<span class="zh">带金色下划线的词语，在段落下方附有简要注释。</span></li>' : '') +
-          '<li>When a paragraph continues onto the next page, its number is repeated there in grey.<span class="zh">段落跨页时，下一页会以灰色重复段落编号。</span></li>' +
-          (hasGlossary ? '<li>An A–Z glossary of every vocabulary word, with page numbers, is at the back of the book.<span class="zh">书末附有按字母排序的词汇表，并标注出现页码。</span></li>' : '') +
-        '</ol></div>' +
-        '<div class="bk-colophon"><b>Words That Think</b> · 品词坊 · 以词启思<br>Created with the Words That Think Bilingual Reader · © ' + year + ' · For educational purposes only</div>' +
-      '</div>';
-    }
-    function backCoverHtml() {
-      return '<div class="bk-back-inner">' +
-        '<div class="bk-back-logo">Words That Think</div>' +
-        '<div class="bk-back-zh">品词坊 · 以词启思</div>' +
-        ornHtml() +
-        '<div class="bk-back-note">' + esc(bookData.title || '') + '<br>Bilingual Edition · 中英双语版<br>For educational purposes only</div>' +
-      '</div>';
-    }
-    function tocLine(cls, href, numHtml, title, pgKey) {
-      return '<a class="bk-toc-line ' + cls + '" href="#bk-' + href + '">' + numHtml +
-        '<span class="bk-toc-t">' + esc(title) + '</span><span class="bk-toc-dots"></span>' +
-        '<span class="bk-toc-p" data-pg="' + pgKey + '">000</span></a>';
-    }
-    function chapterOpenerHtml(ch, ci) {
-      const n = chapterNumber(ch, ci);
-      return '<span class="bk-anchor" id="bk-ch-' + ci + '" data-anchor="ch-' + ci + '"></span>' +
-        '<div class="bk-chap-open">' +
-          '<div class="bk-chap-num">' + n + '</div>' +
-          '<div class="bk-chap-kicker">Chapter ' + n + '<span>第' + zhNum(n) + '章</span></div>' +
-          (chapterTitleIsRedundant(ch) ? '' : '<div class="bk-chap-title">' + esc(ch.title) + '</div>') +
-          ornHtml() +
-        '</div>';
-    }
-
-    // Glossary: packed into two columns per page, with links back to the pages where each word appears.
-    function buildGlossaryPages(bodyPages) {
-      const occ = {};
-      bodyPages.forEach(p => {
-        if (!p.num) return;
-        vocabKeysIn(p.html).forEach(k => {
-          if (!vocabDefinitions[k]) return;
-          (occ[k] = occ[k] || []);
-          if (occ[k].indexOf(p.num) === -1) occ[k].push(p.num);
-        });
-      });
-      const keys = Object.keys(occ).sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
-      if (!keys.length) return [];
-      const firstLetter = (k) => {
-        const c = String(k).trim().normalize('NFD').replace(/[̀-ͯ]/g, '').charAt(0).toUpperCase();
-        return /[A-Z]/.test(c) ? c : '#';
-      };
-      const blocks = [];
-      let letter = null;
-      keys.forEach(k => {
-        const L = firstLetter(k);
-        if (L !== letter) { letter = L; blocks.push({ html: '<div class="bk-gl-letter">' + esc(L) + '</div>', keepNext: true }); }
-        const def = vocabDefinitions[k] || {};
-        const pgs = occ[k];
-        const refs = pgs.slice(0, 6).map(n => '<a href="#bk-pg-' + n + '">' + n + '</a>').join(', ') + (pgs.length > 6 ? ', …' : '');
-        const explain = def.explain || def.simple || '';
-        blocks.push({ html: '<div class="bk-gl-e">' +
-          '<span class="bk-gl-w">' + esc(k) + '</span>' +
-          (def.ipa ? '<span class="bk-gl-ipa">' + esc(def.ipa) + '</span>' : '') +
-          (def.zh ? '<span class="bk-gl-zh">' + esc(def.zh) + '</span>' : '') +
-          ' <span class="bk-gl-pg">· p. ' + refs + '</span>' +
-          (explain ? '<div class="bk-gl-x">' + esc(explain) + '</div>' : '') +
-          (def.example ? '<div class="bk-gl-ex">“' + esc(def.example) + '”</div>' : '') +
-        '</div>' });
-      });
-      blocks.forEach(b => { b.h = measure(b.html, GL_COL_W_PX); });
-      const headHtml = '<span class="bk-anchor" id="bk-glossary" data-anchor="glossary"></span>' +
-        '<div class="bk-gl-head"><div class="bk-toc-h">Glossary</div><div class="bk-toc-hzh">词汇表</div>' + ornHtml() + '</div>';
-      const headH = measure(headHtml);
-      const pages = [];
-      let pg = null;
-      function newPage(first) { pg = { cols: [[], []], used: [0, 0], col: 0, first: first }; }
-      function finish() {
-        pages.push({
-          html: (pg.first ? headHtml : '') + '<div class="bk-gl-cols"><div class="bk-gl-col">' + pg.cols[0].join('') + '</div><div class="bk-gl-col">' + pg.cols[1].join('') + '</div></div>',
-          chapter: 'Glossary', folio: 'arabic', opener: pg.first, wrap: true
-        });
-      }
-      newPage(true);
-      blocks.forEach((b, i) => {
-        const cap = USABLE_H_PX - (pg.first ? headH : 0);
-        const next = blocks[i + 1];
-        const need = b.h + (b.keepNext && next ? next.h : 0);
-        if (pg.used[pg.col] > 0 && pg.used[pg.col] + need > cap) {
-          if (pg.col === 0) pg.col = 1;
-          else { finish(); newPage(false); }
-        }
-        pg.cols[pg.col].push(b.html);
-        pg.used[pg.col] += b.h;
-      });
-      finish();
-      return pages;
-    }
-
-    let pdfFileTitle = '';
-    function buildBookPages() {
-      const chapters = bookData.chapters || [];
-      const hasGlossary = bookHasGlossaryWords();
-      const items = [];
-      items.push({ type: 'page', cls: 'bk-cover', html: coverHtml(), folio: 'none' });
-      items.push({ type: 'page', html: titlePageHtml(hasGlossary), wrap: true, folio: 'roman', hideFolio: true });
-      items.push({ type: 'context', chapter: 'Contents', folio: 'roman' });
-      items.push({ type: 'html', opener: true, html: '<div class="bk-toc-head"><div class="bk-toc-h">Contents</div><div class="bk-toc-hzh">目录</div>' + ornHtml() + '</div>' });
-      chapters.forEach((ch, ci) => {
-        const hasSecs = ch.sections && ch.sections.length;
-        items.push({ type: 'html', keepNext: !!hasSecs, html: '<div class="bk-toc-entry">' +
-          tocLine('bk-toc-ch', 'ch-' + ci, '<span class="bk-toc-n">' + chapterNumber(ch, ci) + '</span>', chapterTitleIsRedundant(ch) ? ('Chapter ' + chapterNumber(ch, ci)) : ch.title, 'ch-' + ci) + '</div>' });
-        if (hasSecs) {
-          ch.sections.forEach((sec, si) => {
-            const last = si === ch.sections.length - 1;
-            items.push({ type: 'html', html: '<div' + (last ? ' class="bk-toc-entry"' : '') + '>' +
-              tocLine('bk-toc-sec', 'sec-' + ci + '-' + si, '', (si + 1) + '. ' + (sec.heading || ('Section ' + (si + 1))), 'sec-' + ci + '-' + si) + '</div>' });
-          });
-        }
-      });
-      if (hasGlossary) {
-        items.push({ type: 'html', html: '<div class="bk-toc-entry" style="margin-top:5mm">' + tocLine('bk-toc-ch', 'glossary', '<span class="bk-toc-n"></span>', 'Glossary · 词汇表', 'glossary') + '</div>' });
-      }
-      chapters.forEach((ch, ci) => {
-        items.push({ type: 'break' });
-        items.push({ type: 'context', chapter: chapterLabel(ch, ci), folio: 'arabic' });
-        items.push({ type: 'html', opener: true, keepNext: true, html: chapterOpenerHtml(ch, ci) + colsLabelHtml() });
-        if (ch.sections && ch.sections.length) {
-          ch.sections.forEach((sec, si) => {
-            if (si > 0 && printOpts.sectionBreak) items.push({ type: 'break' });
-            items.push({ type: 'html', keepNext: true, html: (si === 0 ? '<div class="bk-first-sec">' : '<div>') + sectionHeadHtml(si + 1, sec.heading, 'sec-' + ci + '-' + si) + '</div>' });
-            items.push(...paragraphItems(sec.paragraphs));
-          });
-        } else {
-          items.push(...paragraphItems(ch.paragraphs));
-        }
-      });
-      let pages = paginate(items);
-      if (hasGlossary) {
-        assignNumbers(pages);
-        pages = pages.concat(buildGlossaryPages(pages));
-      }
-      pages.push({ html: backCoverHtml(), full: true, cls: 'bk-back', folio: 'none', noHead: true });
-      assignNumbers(pages);
-      resolvePageRefs(pages);
-      pdfFileTitle = (bookData.title || 'Book') + ' – Bilingual Edition';
-      return pages;
-    }
-
-    // Current section, or whole current chapter, as a short handout with the same book styling.
-    function buildPartPages(scope) {
-      const ch = currentChapter || (bookData.chapters || [])[0];
-      if (!ch) return [];
-      const ci = currentChapterIndex || 0;
-      const n = chapterNumber(ch, ci);
-      const label = chapterLabel(ch, ci);
-      const hasSecs = ch.sections && ch.sections.length;
-      const oneSection = scope === 'section' && readingMode === 'sections' && hasSecs && ch.sections[currentSection];
-      const sub = chapterTitleIsRedundant(ch) ? ('Chapter ' + n) : ('Chapter ' + n + ' · ' + ch.title);
-      const items = [{ type: 'context', chapter: label, folio: 'arabic' }];
-      items.push({ type: 'html', opener: true, keepNext: true, html:
-        '<div class="bk-doc-head"><div class="bk-brand-line">Words That Think<span>品词坊</span></div>' +
-        '<div class="bk-doc-title">' + esc(bookData.title || '') + '</div>' +
-        '<div class="bk-doc-sub">' + esc(sub) + '</div>' + ornHtml() + '</div>' + colsLabelHtml() });
-      if (oneSection) {
-        const sec = ch.sections[currentSection];
-        items.push({ type: 'html', keepNext: true, html: '<div class="bk-first-sec">' + sectionHeadHtml(currentSection + 1, sec.heading) + '</div>' });
-        items.push(...paragraphItems(sec.paragraphs));
-        pdfFileTitle = (bookData.title || 'Book') + ' – ' + label + ' – ' + (sec.heading || ('Section ' + (currentSection + 1)));
-      } else if (hasSecs) {
-        ch.sections.forEach((sec, si) => {
-          if (si > 0 && printOpts.sectionBreak) items.push({ type: 'break' });
-          items.push({ type: 'html', keepNext: true, html: (si === 0 ? '<div class="bk-first-sec">' : '<div>') + sectionHeadHtml(si + 1, sec.heading) + '</div>' });
-          items.push(...paragraphItems(sec.paragraphs));
-        });
-        pdfFileTitle = (bookData.title || 'Book') + ' – ' + label;
-      } else {
-        items.push(...paragraphItems(ch.paragraphs));
-        pdfFileTitle = (bookData.title || 'Book') + ' – ' + label;
-      }
-      const pages = paginate(items);
-      assignNumbers(pages);
-      return pages;
-    }
-
-    // Keep #printArea as a direct child of <body> so the print stylesheet can hide
-    // everything else with display:none (hidden-but-present UI would otherwise
-    // still take up space and print as blank pages).
-    const printArea = document.getElementById('printArea');
-    document.body.appendChild(printArea);
-    let lastBuiltPageCount = 0;
-    function buildPrintAreaFor(mode) {
-      const pages = mode === 'book' ? buildBookPages() : buildPartPages(mode === 'chapter' ? 'chapter' : 'section');
-      const html = renderPages(pages, bookData.title || '');
-      printArea.innerHTML = html;
-      lastBuiltPageCount = pages.length;
-      return html;
-    }
-
-    // ---------- Print Preview ----------
-    const previewOverlay = document.getElementById('printPreviewOverlay');
-    const previewPaper = document.getElementById('printPreviewPaper');
-    const ppPageCount = document.getElementById('ppPageCount');
-    let currentPreviewMode = 'book';
-
-    function fitPreview() {
-      const avail = previewOverlay.clientWidth - 24;
-      const z = Math.min(1, avail / (PAGE_W_MM * MM));
-      previewPaper.style.zoom = z < 1 ? String(z) : '';
-    }
-    function refreshPrintPreview() {
-      const html = buildPrintAreaFor(currentPreviewMode);
-      // The preview is a second copy of the pages, so its link targets get their own ids.
-      previewPaper.innerHTML = html.replace(/ id="bk-/g, ' id="pv-bk-').replace(/ href="#bk-/g, ' href="#pv-bk-');
-      ppPageCount.textContent = lastBuiltPageCount + ' page' + (lastBuiltPageCount === 1 ? '' : 's') + ' · A4';
-      fitPreview();
-    }
-    function syncOptionBoxes() {
-      document.getElementById('ppShowGloss').checked = !!printOpts.gloss;
-      document.getElementById('ppGlossary').checked = !!printOpts.glossary;
-      document.getElementById('ppSectionPageBreak').checked = !!printOpts.sectionBreak;
-      document.getElementById('ppInkSaver').checked = !!printOpts.inkSaver;
-      document.getElementById('ppGlossaryWrap').style.display = currentPreviewMode === 'book' ? '' : 'none';
-    }
-    function openPrintPreview(mode) {
-      currentPreviewMode = mode;
-      syncOptionBoxes();
-      previewPaper.innerHTML = '<div style="color:#fff; padding:3rem; font-size:1rem;">Preparing pages…</div>';
-      ppPageCount.textContent = '';
-      previewOverlay.classList.add('open');
-      previewOverlay.scrollTop = 0;
-      document.body.style.overflow = 'hidden';
-      const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-      Promise.all([imgDimsReady, fontsReady]).then(() => setTimeout(refreshPrintPreview, 30));
-    }
-    function closePrintPreview() {
-      previewOverlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    // Printing goes straight through window.print() on this document (not a hidden
-    // iframe): iOS Safari and WebKit-based viewers are unreliable about printing an
-    // iframe's content. The @media print rules show only #printArea. This must run
-    // synchronously inside the click handler, or iOS drops the user activation needed
-    // to open the print dialog. The document title becomes the PDF's file name.
-    function printCurrentArea() {
-      const prevTitle = document.title;
-      if (pdfFileTitle) document.title = pdfFileTitle;
-      const restore = () => { document.title = prevTitle; window.removeEventListener('afterprint', restore); };
-      window.addEventListener('afterprint', restore);
-      window.print();
-    }
-
-    // Print dropdown
-    const printDropdownToggle = document.getElementById('printDropdownToggle');
-    const printDropdownMenu = document.getElementById('printDropdownMenu');
-    printDropdownToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      printDropdownMenu.classList.toggle('show');
-    });
-    document.addEventListener('click', () => printDropdownMenu.classList.remove('show'));
-    printDropdownMenu.addEventListener('click', (e) => e.stopPropagation());
-    printDropdownMenu.querySelectorAll('.dropdown-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const mode = item.dataset.mode;
-        printDropdownMenu.classList.remove('show');
-        if (mode === 'preview-section') openPrintPreview('section');
-        else if (mode === 'preview-chapter') openPrintPreview('chapter');
-        else if (mode === 'preview-book') openPrintPreview('book');
-        else if (mode === 'pdf') {
-          currentPreviewMode = 'book';
-          buildPrintAreaFor('book');
-          printCurrentArea();
-        }
-      });
-    });
-
-    function bindPrintOption(id, key) {
-      document.getElementById(id).addEventListener('change', (e) => {
-        printOpts[key] = !!e.target.checked;
-        savePrintOpts();
-        refreshPrintPreview();
-      });
-    }
-    bindPrintOption('ppShowGloss', 'gloss');
-    bindPrintOption('ppGlossary', 'glossary');
-    bindPrintOption('ppSectionPageBreak', 'sectionBreak');
-    bindPrintOption('ppInkSaver', 'inkSaver');
-    document.getElementById('ppCloseBtn').addEventListener('click', closePrintPreview);
-    document.getElementById('ppPrintNowBtn').addEventListener('click', () => {
-      // #printArea was already built by refreshPrintPreview() when the preview opened.
-      printCurrentArea();
-    });
-    previewOverlay.addEventListener('click', (e) => {
-      if (e.target === previewOverlay) closePrintPreview();
-    });
-    // Contents / glossary links inside the preview: scroll so the target page sits just below the toolbar.
-    previewPaper.addEventListener('click', (e) => {
-      const a = e.target.closest ? e.target.closest('a[href^="#pv-bk-"]') : null;
-      if (!a) return;
-      const target = document.getElementById(a.getAttribute('href').slice(1));
-      if (!target) return;
-      e.preventDefault();
-      const page = target.closest('.bk-page') || target;
-      const bar = previewOverlay.querySelector('.print-preview-toolbar');
-      const offset = page.getBoundingClientRect().top - (bar ? bar.getBoundingClientRect().bottom : 0) - 10;
-      previewOverlay.scrollTop += offset;
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && previewOverlay.classList.contains('open')) closePrintPreview();
-    });
-    window.addEventListener('resize', () => { if (previewOverlay.classList.contains('open')) fitPreview(); });
-
-    // ----- Quiz rendering (unchanged) -----
     function renderQuiz(quizArr) {
       const tfContainer = document.getElementById('tfQuestions');
       tfContainer.innerHTML = '';
@@ -6309,10 +5288,6 @@
     }
     function hidePopup() { popup.classList.remove('show'); currentVocabTrigger = null; }
     document.addEventListener('click', function(e) {
-      // A highlight mark can end up wrapping a vocab word (the user selected text that
-      // happened to include one); that click is for the highlight editor, not the vocab
-      // popup, so skip it here — the mark's own click handler (added further below) picks
-      // it up instead.
       if (e.target.closest('mark.user-hl')) return;
       const trig = e.target.closest('.vocab-trigger');
       if (trig && trig !== currentVocabTrigger) { e.stopPropagation(); showPopup(trig, trig.getAttribute('data-vocab')); }
@@ -6326,17 +5301,13 @@
     });
     window.addEventListener('scroll', () => { if (currentVocabTrigger) hidePopup(); });
 
-    // ----- User highlights & notes: selecting text in either column shows a small
-    // floating toolbar (Highlight / Note); tapping an existing highlight reopens it
-    // for editing. Everything is saved to localStorage under this book's own key,
-    // so it survives reloads but never leaves the device. -----
     const selToolbar = document.getElementById('selToolbar');
     const noteEditorPopup = document.getElementById('noteEditorPopup');
     const noteEditorQuote = document.getElementById('noteEditorQuote');
     const noteEditorText = document.getElementById('noteEditorText');
     const noteDeleteBtn = document.getElementById('noteDeleteBtn');
-    let pendingSelection = null;   // {pEl, col, idx, start, end, text} captured at mouseup/touchend
-    let noteEditorContext = null;  // {mode:'new', info} or {mode:'edit', id}
+    let pendingSelection = null;
+    let noteEditorContext = null;
 
     function getSelectionInfo() {
       const sel = window.getSelection();
@@ -6359,7 +5330,7 @@
       return { pEl, col, idx, start, end, text, rect: range.getBoundingClientRect() };
     }
     function positionFloatingEl(el, rect, fallbackWidth) {
-      if (window.innerWidth <= 640) return; // CSS media rule pins it as a bottom sheet
+      if (window.innerWidth <= 640) return;
       const w = fallbackWidth || el.offsetWidth || 260;
       let top = rect.top - el.offsetHeight - 10;
       if (top < 8) top = rect.bottom + 10;
@@ -6391,9 +5362,6 @@
       if (selToolbar.contains(e.target) || e.target.closest('#enContent') || e.target.closest('#zhContent')) return;
       selToolbar.style.display = 'none';
     });
-    // Clicking away from an open note editor discards the unsaved draft, same as the
-    // vocab popup's dismiss behavior — nothing has been written to storage yet, so
-    // this only loses an in-progress note the user didn't explicitly Save.
     document.addEventListener('mousedown', (e) => {
       if (noteEditorPopup.style.display === 'none') return;
       if (noteEditorPopup.contains(e.target) || e.target.closest('mark.user-hl') || e.target.closest('#selToolbar')) return;
@@ -6495,8 +5463,6 @@
       annotations[found.key].splice(found.index, 1);
       if (!annotations[found.key].length) delete annotations[found.key];
       saveAnnotationsStore();
-      // Unwrap any live marks for this id (may be more than one if the highlight
-      // crossed a nested span boundary), merging their text back into the paragraph.
       document.querySelectorAll('mark.user-hl[data-hl-id="' + id + '"]').forEach(m => {
         const parent = m.parentNode;
         while (m.firstChild) parent.insertBefore(m.firstChild, m);
@@ -6510,7 +5476,6 @@
       deleteAnnotation(noteEditorContext.id);
       closeNoteEditor();
     });
-    // Clicking an existing highlight (with or without a note) reopens the editor.
     document.addEventListener('click', (e) => {
       const mark = e.target.closest('mark.user-hl');
       if (!mark) return;
@@ -6518,8 +5483,6 @@
       openNoteEditor(null, mark.dataset.hlId);
     });
 
-    // ----- "My Notes" panel: every highlight/note across the whole book, grouped by
-    // chapter, with jump-to-location and delete. -----
     const notesPanelOverlay = document.getElementById('notesPanelOverlay');
     function updateNotesPanelCount() {
       const countEl = document.getElementById('notesPanelBtnCount');
@@ -6641,14 +5604,6 @@
     }
     document.getElementById('notesExportBtn').addEventListener('click', exportAnnotations);
 
-    // ----- Full data backup/restore: every localStorage key this reader owns for
-    // THIS book (reading progress, reading mode, highlights & notes) plus the two
-    // settings shared across every book from this creator (dark mode, text size).
-    // Unlike the plain-text export above, this JSON file can be re-imported to fully
-    // restore state — for moving to another device/browser, or recovering after this
-    // browser's storage gets cleared (which is also why Safari/embedded-viewer users
-    // in particular should export this after adding highlights, since local storage
-    // in those contexts can be less durable than in a regular desktop browser).
     function collectBackupData() {
       const data = {};
       for (let i = 0; i < localStorage.length; i++) {
@@ -6685,7 +5640,7 @@
     });
     document.getElementById('dataImportInput').addEventListener('change', function() {
       const file = this.files[0];
-      this.value = ''; // clears the picker so re-selecting the same file later still fires 'change'
+      this.value = '';
       if (!file) return;
       const fileReader = new FileReader();
       fileReader.onload = function(ev) {
@@ -6730,17 +5685,9 @@
 
     updateNotesPanelCount();
 
-    // ----- Read Aloud (TTS for the whole visible English text) -----
     let ttsPlaying = false;
     function stopReadAloud() {
       if (!ttsPlaying && !('speechSynthesis' in window && window.speechSynthesis.speaking)) return;
-      // IMPORTANT: flip ttsPlaying to false BEFORE calling cancel(). Safari/WebKit (and
-      // WebKit-based viewers like Foxit's PDF/HTML renderer) can fire the in-flight
-      // utterance's onerror/onend callback synchronously, inside this same cancel() call
-      // — unlike Chrome, which defers it to a later task. Since speakNext() re-checks
-      // ttsPlaying at its very top, cancel() must never run while ttsPlaying is still true,
-      // or that synchronous callback re-enters speakNext() and starts the next utterance
-      // right away, making Stop appear to do nothing.
       ttsPlaying = false;
       window.speechSynthesis.cancel();
       document.querySelectorAll('.tts-highlight').forEach(el => el.classList.remove('tts-highlight'));
@@ -6775,7 +5722,6 @@
       if (ttsPlaying) stopReadAloud(); else startReadAloud();
     });
 
-    // Audio: EN + 中文 per section; Read Aloud (browser voice) is only a fallback for sections without an MP3.
     const sectionAudio = document.getElementById('sectionAudio');
     const sectionAudioBar = document.getElementById('sectionAudioBar');
     const audioSectionLabel = document.getElementById('audioSectionLabel');
@@ -6784,13 +5730,6 @@
     let currentAudioLang = 'en';
     let preferredAudioLang = 'en';   // the language the listener last chose; kept from section to section
     let nowPlaying = null;           // { ci: chapter index, si: section index, -1 = chapter-level recording }
-
-    function updateReadAloudVisibility(hasAudio) {
-      const raBtn = document.getElementById('readAloudBtn');
-      if (!raBtn) return;
-      if (hasAudio && typeof stopReadAloud === 'function') stopReadAloud();
-      raBtn.style.display = hasAudio ? 'none' : '';
-    }
 
     function applyAudioLang(lang) {
       if (!currentSectionAudioData) return;
@@ -6819,6 +5758,14 @@
       audioLangToggle.querySelectorAll('.audio-lang-btn').forEach(btn => {
         btn.addEventListener('click', () => { preferredAudioLang = btn.dataset.lang; applyAudioLang(btn.dataset.lang); });
       });
+    }
+
+    // The browser-voice Read Aloud is only a fallback: hide it when this section has an MP3.
+    function updateReadAloudVisibility(hasAudio) {
+      const raBtn = document.getElementById('readAloudBtn');
+      if (!raBtn) return;
+      if (hasAudio && typeof stopReadAloud === 'function') stopReadAloud();
+      raBtn.style.display = hasAudio ? 'none' : '';
     }
 
     function loadSectionAudio(sec) {
@@ -6960,7 +5907,6 @@
     });
     sectionAudio.addEventListener('play', () => { if (typeof stopReadAloud === 'function') stopReadAloud(); });
 
-    // Font size (unchanged)
     function applyFontScale(scale, opts) {
       fontScale = Math.min(FONT_SCALE_MAX, Math.max(FONT_SCALE_MIN, scale));
       document.documentElement.style.setProperty('--font-scale', fontScale);
@@ -6977,7 +5923,6 @@
     document.getElementById('fontDecBtn').addEventListener('click', () => applyFontScale(fontScale - FONT_SCALE_STEP));
     document.getElementById('fontIncBtn').addEventListener('click', () => applyFontScale(fontScale + FONT_SCALE_STEP));
 
-    // EN/ZH mobile toggle (unchanged)
     function getHeaderBottom() {
       const topBar = document.querySelector('.top-bar');
       return topBar ? topBar.getBoundingClientRect().bottom : 0;
@@ -7050,7 +5995,6 @@
     document.getElementById('toggleZhBtn').addEventListener('click', () => applyMobileLang('zh'));
     window.addEventListener('resize', () => applyMobileLang(mobileLang));
 
-    // Swipe (unchanged)
     let swipeStartX = 0, swipeStartY = 0, swipeStartTime = 0, swipeIntent = null, lastSwipeAt = 0;
     const SWIPE_COOLDOWN_MS = 500;
     const colsContainer = document.getElementById('colsContainer');
@@ -7083,8 +6027,6 @@
     }, { passive: true });
 
     function stopSpeaking() {
-      // Was previously a no-op stub; navigation call sites (page flips, chapter/mode
-      // switches, quiz start) expect this to actually stop any audio that's mid-playback.
       try { if (sectionAudio && !sectionAudio.paused) sectionAudio.pause(); } catch (e) {}
     }
 
@@ -7168,3 +6110,4 @@
 </script>
 </body>
 </html>
+
